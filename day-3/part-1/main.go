@@ -7,10 +7,11 @@ import (
   "regexp"
   "bufio"
   "strconv"
+  "strings"
 )
 
 type password struct {
-  first, second    int
+  min, max         int
   letter, password string
 }
 
@@ -26,11 +27,11 @@ func main() {
   scanner := bufio.NewScanner(file)
   for scanner.Scan() {
     text := scanner.Text()
-    first, _ := strconv.Atoi(inputRegex.ReplaceAllString(text, "$1"))
-    second, _ := strconv.Atoi(inputRegex.ReplaceAllString(text, "$2"))
+    min, _ := strconv.Atoi(inputRegex.ReplaceAllString(text, "$1"))
+    max, _ := strconv.Atoi(inputRegex.ReplaceAllString(text, "$2"))
     passwords = append(passwords, &password{
-      first:    first,
-      second:   second,
+      min:      min,
+      max:      max,
       letter:   inputRegex.ReplaceAllString(text, "$3"),
       password: inputRegex.ReplaceAllString(text, "$4"),
     })
@@ -38,7 +39,7 @@ func main() {
 
   correct := 0
   for _, pw := range passwords {
-    if (string(pw.password[pw.first-1]) == pw.letter) != (string(pw.password[pw.second-1]) == pw.letter) {
+    if count := strings.Count(pw.password, pw.letter); count >= pw.min && count <= pw.max {
       correct++
     }
   }
