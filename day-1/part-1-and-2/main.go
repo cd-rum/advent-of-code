@@ -10,7 +10,7 @@ import (
 
 func main() {
   numbers := []int{}
-  file, err := os.Open("day1")
+  file, err := os.Open("input")
   if err != nil {
       log.Fatal(err)
   }
