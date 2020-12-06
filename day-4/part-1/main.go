@@ -18,17 +18,6 @@ func checkDelimiter(slicedContent []string, delimiter string) []string {
   }
 }
 
-func checkTrees(input []string, deltax int, deltay int) int {
-  trees := 0
-  for y, x := 0, 0; y < len(input); y, x = y + deltay, x + deltax {
-    if string(input[y][x % len(input[y])]) == "#" {
-      trees++
-    }
-  }
-
-  return trees
-}
-
 func main() {
   file, err := ioutil.ReadFile("input")
   if err != nil {
